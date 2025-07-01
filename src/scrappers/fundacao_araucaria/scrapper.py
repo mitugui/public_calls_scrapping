@@ -12,7 +12,7 @@ class FundacaoAraucariaScrapper(Scrapper):
         source = self.source
 
         options = webdriver.ChromeOptions()
-        options.add_argument("--headless")
+        options.add_argument('--headless')
         web_driver = webdriver.Chrome(options=options)
         web_driver.get(source)
 
@@ -34,10 +34,10 @@ class FundacaoAraucariaScrapper(Scrapper):
 
             for span in spans:
                 text = span.text.strip()
-                if text.startswith("Inscrição:"):
-                    inscricao = text.replace("Inscrição:", "").strip()
-                elif text.startswith("Dotação Inicial:"):
-                    dotacao = text.replace("Dotação Inicial:", "").strip()
+                if text.startswith('Inscrição:'):
+                    inscricao = text.replace('Inscrição:', '').strip()
+                elif text.startswith('Dotação Inicial:'):
+                    dotacao = text.replace('Dotação Inicial:', '').strip()
 
             links_container = container.find_elements(By.XPATH, './/div[1]/ul/li')
             links: List[Link] = []
@@ -46,8 +46,8 @@ class FundacaoAraucariaScrapper(Scrapper):
                 try:
                     a_tag = link.find_element(By.XPATH, './/span/a')
                     links.append({
-                        "title": a_tag.text,
-                        "link": a_tag.get_attribute('href')
+                        'title': a_tag.text,
+                        'link': a_tag.get_attribute('href')
                     })
                 except:
                     continue

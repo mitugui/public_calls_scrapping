@@ -13,9 +13,9 @@ class CNPQScrapper(Scrapper):
         source = self.source
 
         options = FirefoxOptions()
-        options.add_argument("--headless")
-        options.set_preference("webdriver_accept_untrusted_certs", True)
-        options.set_preference("acceptInsecureCerts", True)
+        options.add_argument('--headless')
+        options.set_preference('webdriver_accept_untrusted_certs', True)
+        options.set_preference('acceptInsecureCerts', True)
 
         driver = webdriver.Firefox(options=options)
         driver.get(source)
