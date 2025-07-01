@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from typing import List
-from scrappers.fundacao_araucaria.model import Link, Call
+from scrappers.model import Call, Link
 from scrappers.scrapper import Scrapper
 
 class FundacaoAraucariaScrapper(Scrapper):
@@ -30,7 +30,6 @@ class FundacaoAraucariaScrapper(Scrapper):
             spans = container.find_elements(By.XPATH, './/div[2]//span')
 
             inscricao = None
-            responsavel = None
             dotacao = None
 
             for span in spans:

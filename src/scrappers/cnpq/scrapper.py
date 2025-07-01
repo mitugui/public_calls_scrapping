@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from scrappers.scrapper import Scrapper
 from typing import List
-from scrappers.cnpq.model import Call
+from scrappers.model import Call, Link
 
 class CNPQScrapper(Scrapper):
     def __init__(self, source):
@@ -25,11 +25,18 @@ class CNPQScrapper(Scrapper):
         calls: List[Call] = []
 
         for container in main_content_containers:
+            links: List[Link] = []
+
             try:
                 titulo = container.find_element(By.XPATH, './/div[1]/h4').text
                 descricao = container.find_element(By.XPATH, './/div[1]/p').text
                 inscricao = container.find_element(By.XPATH, './/div[1]/div/ul/li').text
                 link = container.find_element(By.XPATH, './/div[2]/div/div/div/a').get_attribute('href')
+
+                links.append({
+                    'title': 'Chamada',
+                    'link': link
+                })
             except Exception:
                 continue
 
@@ -37,7 +44,7 @@ class CNPQScrapper(Scrapper):
                 title=titulo,
                 description=descricao,
                 inscription=inscricao,
-                link=link
+                links=links
             ))
 
         driver.quit()

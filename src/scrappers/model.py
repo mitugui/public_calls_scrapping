@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 @dataclass
 class Link:
@@ -11,5 +11,5 @@ class Call:
     title: str
     description: str
     inscription: str
-    initial_funding: str
     links: List[Link]
+    initial_funding: Optional[str] = None
