@@ -8,6 +8,6 @@ class CallGenerator:
         scrapper = scrapper_class(source)
         calls = scrapper.extract_calls()
 
-        json_file_name = source_name + '_editais'
+        json_file_name = source_name + '_calls'
 
         file.save_json(json_file_name, calls)

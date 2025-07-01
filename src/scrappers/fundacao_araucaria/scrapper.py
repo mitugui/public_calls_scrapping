@@ -22,22 +22,22 @@ class FundacaoAraucariaScrapper(Scrapper):
 
         for container in main_content_containers:
             try:
-                titulo = container.find_element(By.XPATH, './/div[1]/h3').text
-                descricao = container.find_element(By.XPATH, './/div[1]/p').text
+                title = container.find_element(By.XPATH, './/div[1]/h3').text
+                description = container.find_element(By.XPATH, './/div[1]/p').text
             except:
                 continue
 
             spans = container.find_elements(By.XPATH, './/div[2]//span')
 
-            inscricao = None
-            dotacao = None
+            inscription = None
+            initial_funding = None
 
             for span in spans:
                 text = span.text.strip()
                 if text.startswith('Inscrição:'):
-                    inscricao = text.replace('Inscrição:', '').strip()
+                    inscription = text.replace('Inscrição:', '').strip()
                 elif text.startswith('Dotação Inicial:'):
-                    dotacao = text.replace('Dotação Inicial:', '').strip()
+                    initial_funding = text.replace('Dotação Inicial:', '').strip()
 
             links_container = container.find_elements(By.XPATH, './/div[1]/ul/li')
             links: List[Link] = []
@@ -53,10 +53,10 @@ class FundacaoAraucariaScrapper(Scrapper):
                     continue
 
             calls.append(Call(
-                title=titulo,
-                description=descricao,
-                inscription=inscricao,
-                initial_funding=dotacao,
+                title=title,
+                description=description,
+                inscription=inscription,
+                initial_funding=initial_funding,
                 links=links
             ))
 

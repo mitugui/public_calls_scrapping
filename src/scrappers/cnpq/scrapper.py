@@ -28,22 +28,22 @@ class CNPQScrapper(Scrapper):
             links: List[Link] = []
 
             try:
-                titulo = container.find_element(By.XPATH, './/div[1]/h4').text
-                descricao = container.find_element(By.XPATH, './/div[1]/p').text
-                inscricao = container.find_element(By.XPATH, './/div[1]/div/ul/li').text
-                link = container.find_element(By.XPATH, './/div[2]/div/div/div/a').get_attribute('href')
+                title = container.find_element(By.XPATH, './/div[1]/h4').text
+                description = container.find_element(By.XPATH, './/div[1]/p').text
+                inscription = container.find_element(By.XPATH, './/div[1]/div/ul/li').text
+                link = container.find_element(By.XPATH, './/div[2]/div/div/div/a')
 
                 links.append({
                     'title': 'Chamada',
-                    'link': link
+                    'link': link.get_attribute('href')
                 })
             except Exception:
                 continue
 
             calls.append(Call(
-                title=titulo,
-                description=descricao,
-                inscription=inscricao,
+                title=title,
+                description=description,
+                inscription=inscription,
                 links=links
             ))
 
