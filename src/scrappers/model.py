@@ -9,6 +9,7 @@ class Link:
 @dataclass
 class Call:
     title: str
+    source: str
     description: str
     inscription: str
     links: List[Link]

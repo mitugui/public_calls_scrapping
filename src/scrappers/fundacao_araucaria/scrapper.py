@@ -5,8 +5,9 @@ from scrappers.model import Call, Link
 from scrappers.scrapper import Scrapper
 
 class FundacaoAraucariaScrapper(Scrapper):
-    def __init__(self, source):
+    def __init__(self, source, source_name):
         self.source = source
+        self.source_name = source_name
 
     def extract_calls(self) -> List[Call]:
         source = self.source
@@ -54,6 +55,7 @@ class FundacaoAraucariaScrapper(Scrapper):
 
             calls.append(Call(
                 title=title,
+                source=self.source_name,
                 description=description,
                 inscription=inscription,
                 initial_funding=initial_funding,

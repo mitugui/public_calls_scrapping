@@ -6,8 +6,9 @@ from typing import List
 from scrappers.model import Call, Link
 
 class CNPQScrapper(Scrapper):
-    def __init__(self, source):
+    def __init__(self, source, source_name):
         self.source = source
+        self.source_name = source_name
 
     def extract_calls(self):
         source = self.source
@@ -42,6 +43,7 @@ class CNPQScrapper(Scrapper):
 
             calls.append(Call(
                 title=title,
+                source=self.source_name,
                 description=description,
                 inscription=inscription,
                 links=links
