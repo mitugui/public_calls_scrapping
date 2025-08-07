@@ -35,7 +35,7 @@ class FundacaoAraucariaScrapper(Scrapper):
 
             for span in spans:
                 text = span.text.strip()
-                if text.startswith('Inscrição:'):
+                if text.startswith('Inscrição'):
                     inscription = text.replace('Inscrição:', '').strip()
                 elif text.startswith('Dotação Inicial:'):
                     initial_funding = text.replace('Dotação Inicial:', '').strip()
