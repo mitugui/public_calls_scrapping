@@ -1,8 +1,8 @@
-from selenium import webdriver
+from services.remote_web_driver_factory import RemoteWebDriverFactory
 from selenium.webdriver.common.by import By
+from scrappers.scrapper import Scrapper
 from typing import List
 from scrappers.model import Call, Link
-from scrappers.scrapper import Scrapper
 
 class FundacaoAraucariaScrapper(Scrapper):
     def __init__(self, source, source_name):
@@ -11,13 +11,12 @@ class FundacaoAraucariaScrapper(Scrapper):
 
     def extract_calls(self) -> List[Call]:
         source = self.source
+        
+        driver = RemoteWebDriverFactory.get_driver()
 
-        options = webdriver.ChromeOptions()
-        options.add_argument('--headless')
-        web_driver = webdriver.Chrome(options=options)
-        web_driver.get(source)
+        driver.get(source)
 
-        main_content_containers = web_driver.find_elements(By.XPATH, '//*[@id="content"]/div/div[1]/div')
+        main_content_containers = driver.find_elements(By.XPATH, '//*[@id="content"]/div/div[1]/div')
 
         calls: List[Call] = []
 
@@ -62,5 +61,5 @@ class FundacaoAraucariaScrapper(Scrapper):
                 links=links
             ))
 
-        web_driver.quit()
+        driver.quit()
         return calls

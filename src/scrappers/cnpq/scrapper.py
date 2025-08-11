@@ -1,6 +1,5 @@
-from selenium import webdriver
+from services.remote_web_driver_factory import RemoteWebDriverFactory
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from scrappers.scrapper import Scrapper
 from typing import List
 from scrappers.model import Call, Link
@@ -13,12 +12,8 @@ class CNPQScrapper(Scrapper):
     def extract_calls(self):
         source = self.source
 
-        options = FirefoxOptions()
-        options.add_argument('--headless')
-        options.set_preference('webdriver_accept_untrusted_certs', True)
-        options.set_preference('acceptInsecureCerts', True)
+        driver = RemoteWebDriverFactory.get_driver()
 
-        driver = webdriver.Firefox(options=options)
         driver.get(source)
 
         main_content_containers = driver.find_elements(By.XPATH, '//*[contains(@class, "espaco-conteudo")]/div/div[2]/div/div/ol/li')
