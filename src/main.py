@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from scrappers.fundacao_araucaria.scrapper import FundacaoAraucariaScrapper
 from scrappers.cnpq.scrapper import CNPQScrapper
+from scrappers.funbio.scrapper import FunbioScrapper
 from services.call_generator import CallGenerator
 import json
 
@@ -19,6 +20,11 @@ def get():
         data = json.load(file)
 
     path = './cnpq_calls.json'
+
+    with open(path, 'r') as file:
+        data += json.load(file)
+
+    path = './funbio_calls.json'
 
     with open(path, 'r') as file:
         data += json.load(file)
@@ -49,6 +55,12 @@ if __name__ == '__main__':
         CNPQScrapper,
         'http://memoria2.cnpq.br/web/guest/chamadas-publicas',
         'cnpq'
+    )
+
+    CallGenerator.generate(
+        FunbioScrapper,
+        'https://chamadas.funbio.org.br/',
+        'funbio'
     )
 
     app.run(host='0.0.0.0')
