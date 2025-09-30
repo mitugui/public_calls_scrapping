@@ -14,21 +14,31 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/calls', methods=['GET'])
 def get():    
-    path = './fundacao_araucaria_calls.json'
+    data = []
+    try:
+        path = './fundacao_araucaria_calls.json'
 
-    with open(path, 'r') as file:
-        data = json.load(file)
+        with open(path, 'r') as file:
+            data = json.load(file)
+    except:
+        pass
 
-    path = './cnpq_calls.json'
+    try:
+        path = './cnpq_calls.json'
 
-    with open(path, 'r') as file:
-        data += json.load(file)
+        with open(path, 'r') as file:
+            data += json.load(file)
+    except:
+        pass
 
-    path = './funbio_calls.json'
+    try:
+        path = './funbio_calls.json'
 
-    with open(path, 'r') as file:
-        data += json.load(file)
-    
+        with open(path, 'r') as file:
+            data += json.load(file)
+    except:
+        pass
+
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
 
@@ -45,22 +55,31 @@ def get():
     }, 200
 
 if __name__ == '__main__':
-    CallGenerator.generate(
-        FundacaoAraucariaScrapper,
-        'https://www.fappr.pr.gov.br/Programas-Abertos',
-        'fundacao_araucaria'
-    )
+    try:
+        CallGenerator.generate(
+            FundacaoAraucariaScrapper,
+            'https://www.fappr.pr.gov.br/Programas-Abertos',
+            'fundacao_araucaria'
+        )   
+    except:
+        pass
 
-    CallGenerator.generate(
-        CNPQScrapper,
-        'http://memoria2.cnpq.br/web/guest/chamadas-publicas',
-        'cnpq'
-    )
+    try:
+        CallGenerator.generate(
+            CNPQScrapper,
+            'http://memoria2.cnpq.br/web/guest/chamadas-publicas',
+            'cnpq'
+        )   
+    except:
+        pass
 
-    CallGenerator.generate(
-        FunbioScrapper,
-        'https://chamadas.funbio.org.br/',
-        'funbio'
-    )
-
+    try:
+        CallGenerator.generate(
+            FunbioScrapper,
+            'https://chamadas.funbio.org.br/',
+            'funbio'
+        )   
+    except:
+        pass
+    
     app.run(host='0.0.0.0')
